@@ -3,19 +3,21 @@ import type { ModelStatusResponse, ModelEntry, AggregatedBar } from '@/types';
 
 const ICON_MAP: [RegExp, string][] = [
   [/^claude/i, 'i-logos:claude-icon'],
-  [/^gpt|^o[134]-|^openai/i, 'i-ri:openai-fill'],
+  [/^gpt|^o[134]-|^openai/i, 'i-bi:openai'],
   [/^deepseek/i, 'i-logos:deepseek-icon'],
   [/^qwen/i, 'i-logos:qwen-icon'],
   [/^gemini/i, 'i-vscode-icons:file-type-gemini'],
   [/^kimi|^moonshot/i, 'i-hugeicons:kimi-ai'],
   [/^minimax/i, 'i-simple-icons:minimax'],
-  [/^grok/i, 'i-logos:grok-icon'],
+  [/^grok/i, 'i-bxl:grok'],
   [/^mimo/i, 'i-simple-icons:xiaomi'],
   [/^glm-/i, 'i-mynaui:letter-z-solid'],
+  [/^llama/i, 'i-simple-icons:ollama'],
 ];
 
 const HIDDEN_REGEXES = [
   /^claude-\w+-\d\.\d$/i,
+  /^claude-\.+-thinking$/i,
   /^prei-fb-chain$/,
 ]
 

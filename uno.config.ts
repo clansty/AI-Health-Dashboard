@@ -10,12 +10,14 @@ export default defineConfig({
   safelist: [
     'i-logos:qwen-icon',
     'i-logos:claude-icon',
-    'i-logos:openai-icon',
+    'i-bi:openai',
     'i-logos:deepseek-icon',
     'i-simple-icons:xiaomi',
     'i-vscode-icons:file-type-gemini',
     'i-hugeicons:kimi-ai',
     'i-simple-icons:minimax',
-    'i-logos:grok-icon',
+    'i-bxl:grok',
+    'i-mynaui:letter-z-solid',
+    'i-simple-icons:ollama',
   ],
 });

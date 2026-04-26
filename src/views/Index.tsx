@@ -10,6 +10,10 @@ export default defineComponent({
   render() {
     return (
       <div class="min-h-screen bg-zinc-900 text-zinc-100 p-6">
+        <div class="mb-10">
+          <AccountsSection />
+        </div>
+
         <h1 class="text-xl font-semibold mb-4">模型状态</h1>
 
         {this.loading && (
@@ -29,10 +33,6 @@ export default defineComponent({
             ))}
           </div>
         )}
-
-        <div class="mt-10">
-          <AccountsSection />
-        </div>
       </div>
     );
   },
