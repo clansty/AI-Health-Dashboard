@@ -9,15 +9,16 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@unocss/reset": "^0.62.2",
-    "@vitejs/plugin-vue-jsx": "^4.0.1",
-    "naive-ui": "^2.39.0",
-    "sass": "^1.77.8",
-    "typescript": "^5.5.4",
-    "unocss": "^0.62.2",
-    "vite": "^5.4.1",
-    "vue": "^3.4.38",
-    "vue-router": "^4.4.3"
+    "@cloudflare/workers-types": "^4.20260426.1",
+    "@iconify/json": "^2.2.466",
+    "@unocss/reset": "^66.6.8",
+    "@vitejs/plugin-vue-jsx": "^5.1.5",
+    "sass": "^1.99.0",
+    "typescript": "^6.0.3",
+    "unocss": "^66.6.8",
+    "vite": "^8.0.10",
+    "vue": "^3.5.33",
+    "vue-router": "^5.0.6"
   },
   "packageManager": "pnpm@9.7.0+sha512.dc09430156b427f5ecfc79888899e1c39d2d690f004be70e05230b72cb173d96839587545d09429b55ac3c429c801b4dc3c0e002f653830a420fa2dd4e3cf9cf"
 }
