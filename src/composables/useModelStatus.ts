@@ -48,7 +48,7 @@ export function useModelStatus(intervalMs = 60_000) {
 
   async function fetchData() {
     try {
-      const res = await fetch('/stats/models');
+      const res = await fetch('/api/stats/models');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data: ModelStatusResponse = await res.json();
 
