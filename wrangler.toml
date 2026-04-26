@@ -1,0 +1,13 @@
+name = "ai-health-dashboard"
+main = "worker/index.ts"
+compatibility_date = "2026-04-26"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*"]
+
+[[vpc_services]]
+binding = "VPC"
+service_id = "019dc8ad-2d11-77c1-8ef6-8ce0cd877b27"
