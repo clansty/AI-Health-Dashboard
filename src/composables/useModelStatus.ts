@@ -2,16 +2,22 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import type { ModelStatusResponse, ModelEntry, AggregatedBar } from '@/types';
 
 const ICON_MAP: [RegExp, string][] = [
-  [/claude/i, 'i-logos:claude-icon'],
-  [/gpt|^o[134]-|^openai/i, 'i-logos:openai-icon'],
-  [/deepseek/i, 'i-logos:deepseek-icon'],
-  [/qwen/i, 'i-logos:qwen-icon'],
-  [/gemini/i, 'i-vscode-icons:file-type-gemini'],
-  [/kimi|moonshot/i, 'i-hugeicons:kimi-ai'],
-  [/minimax/i, 'i-simple-icons:minimax'],
-  [/grok/i, 'i-logos:grok-icon'],
-  [/mimo/i, 'i-simple-icons:xiaomi'],
+  [/^claude/i, 'i-logos:claude-icon'],
+  [/^gpt|^o[134]-|^openai/i, 'i-ri:openai-fill'],
+  [/^deepseek/i, 'i-logos:deepseek-icon'],
+  [/^qwen/i, 'i-logos:qwen-icon'],
+  [/^gemini/i, 'i-vscode-icons:file-type-gemini'],
+  [/^kimi|^moonshot/i, 'i-hugeicons:kimi-ai'],
+  [/^minimax/i, 'i-simple-icons:minimax'],
+  [/^grok/i, 'i-logos:grok-icon'],
+  [/^mimo/i, 'i-simple-icons:xiaomi'],
+  [/^glm-/i, 'i-mynaui:letter-z-solid'],
 ];
+
+const HIDDEN_REGEXES = [
+  /^claude-\w+-\d\.\d$/i,
+  /^prei-fb-chain$/,
+]
 
 function resolveIcon(name: string): string | undefined {
   for (const [pattern, icon] of ICON_MAP) {
@@ -53,6 +59,7 @@ export function useModelStatus(intervalMs = 60_000) {
       const data: ModelStatusResponse = await res.json();
 
       models.value = Object.entries(data.models)
+        .filter(([name]) => !HIDDEN_REGEXES.some(regex => regex.test(name)))
         .map(([name, info]) => ({
           name,
           channelCount: info.current_channel_count,
