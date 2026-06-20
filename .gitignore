@@ -15,3 +15,5 @@ yarn-error.log
 result
 .direnv
 .history
+.dev.vars
+.wrangler

@@ -12,8 +12,8 @@ export default defineComponent({
   render() {
     const { model } = this;
     return (
-      <div class="bg-zinc-800/80 border border-zinc-700/50 rounded-lg px-3 py-2">
-        <div class="flex items-center justify-between mb-2">
+      <div class="bg-zinc-800/40 ring-1 ring-zinc-800 hover:ring-zinc-700 rounded-xl px-3.5 py-3 transition-colors">
+        <div class="flex items-center justify-between mb-2.5">
           <div class="flex items-center gap-2 min-w-0">
             {model.icon && <div class={`${model.icon} text-base shrink-0`} />}
             <span class="text-sm font-medium text-zinc-200 truncate">{model.name}</span>
@@ -21,8 +21,8 @@ export default defineComponent({
           <span
             class={`text-xs font-medium px-1.5 py-0.5 rounded shrink-0 ml-2 ${
               model.available
-                ? 'text-green-400 bg-green-400/10'
-                : 'text-red-400 bg-red-400/10'
+                ? 'text-emerald-300 bg-emerald-500/10'
+                : 'text-rose-300 bg-rose-500/10'
             }`}
           >
             {model.channelCount}

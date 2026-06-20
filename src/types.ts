@@ -22,8 +22,34 @@ export interface ModelStatusResponse {
 export interface Sub2ApiAccount {
   id: number;
   platform: string;
+  type: string;
   status: string;
   error_message: string;
+  schedulable: boolean;
+  rate_limited_at: string | null;
+  rate_limit_reset_at: string | null;
+  overload_until: string | null;
+  temp_unschedulable_until: string | null;
+  temp_unschedulable_reason: string;
+  // 容量
+  concurrency: number;
+  current_concurrency: number;
+  window_cost_limit: number | null;
+  current_window_cost: number | null;
+  window_cost_sticky_reserve: number | null;
+  max_sessions: number | null;
+  active_sessions: number | null;
+  session_idle_timeout_minutes: number | null;
+  base_rpm: number | null;
+  current_rpm: number | null;
+  rpm_strategy: string | null;
+  rpm_sticky_buffer: number | null;
+  quota_daily_limit: number | null;
+  quota_daily_used: number | null;
+  quota_weekly_limit: number | null;
+  quota_weekly_used: number | null;
+  quota_limit: number | null;
+  quota_used: number | null;
 }
 
 export interface UsageWindow {
@@ -35,7 +61,7 @@ export interface UsageWindow {
     tokens: number;
     cost: number;
     standard_cost: number;
-    user_cost: number;
+    user_cost: number | null;
   };
   used_requests?: number;
   limit_requests?: number;
@@ -59,8 +85,11 @@ export interface Sub2ApiUsage {
   subscription_tier: string;
   is_forbidden: boolean;
   forbidden_reason: string;
+  forbidden_type: string;
   needs_reauth: boolean;
+  needs_verify: boolean;
   error: string;
+  error_code: string;
 }
 
 // ===== UI 层用的聚合类型 =====

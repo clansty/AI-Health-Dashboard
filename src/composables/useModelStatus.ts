@@ -17,7 +17,7 @@ const ICON_MAP: [RegExp, string][] = [
 
 const HIDDEN_REGEXES = [
   /^claude-\w+-\d\.\d$/i,
-  /^claude-\.+-thinking$/i,
+  /^claude-.+-thinking$/i,
   /^prei-fb-chain$/,
 ]
 

@@ -1,6 +1,9 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import type { Sub2ApiAccount, Sub2ApiUsage, AccountWithUsage } from '@/types';
 
+// 只关心 openai / anthropic
+const WANTED_PLATFORMS = new Set(['openai', 'anthropic']);
+
 export function useAccounts(intervalMs = 60_000) {
   const accounts = ref<AccountWithUsage[]>([]);
   const loading = ref(true);
@@ -23,26 +26,30 @@ export function useAccounts(intervalMs = 60_000) {
       const res = await fetch('/api/sub2api/accounts');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json() as { items: Sub2ApiAccount[] };
+      const items = data.items.filter(a => WANTED_PLATFORMS.has(a.platform));
 
-      accounts.value = data.items.map(a => ({
-        account: a,
-        usage: null,
-        loading: true,
-        error: null,
-      }));
+      // 合并旧数据，避免刷新时整屏闪烁
+      const prev = new Map(accounts.value.map(x => [x.account.id, x]));
+      accounts.value = items.map(a => {
+        const old = prev.get(a.id);
+        return {
+          account: a,
+          usage: old?.usage ?? null,
+          loading: old ? false : true,
+          error: old?.error ?? null,
+        };
+      });
       error.value = null;
       loading.value = false;
 
-      const usageResults = await Promise.allSettled(
-        data.items.map(a => fetchUsage(a))
-      );
-
-      accounts.value = data.items.map((a, i) => {
-        const result = usageResults[i];
-        if (result.status === 'fulfilled') {
-          return { account: a, usage: result.value.usage, loading: false, error: result.value.error };
-        }
-        return { account: a, usage: null, loading: false, error: 'fetch failed' };
+      // 逐个拉取用量：加载完一个就更新一个（增量渲染）
+      items.forEach(async (a) => {
+        const { usage, error: uErr } = await fetchUsage(a);
+        const item = accounts.value.find(x => x.account.id === a.id);
+        if (!item) return;
+        if (usage) item.usage = usage; // 失败时保留上一次数据
+        item.error = uErr;
+        item.loading = false;
       });
     } catch (e) {
       error.value = e instanceof Error ? e.message : String(e);
