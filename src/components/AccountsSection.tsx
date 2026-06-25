@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue';
 import { useAccounts } from '@/composables/useAccounts';
 import type { AccountWithUsage, UsageWindow } from '@/types';
+import OpenCodeGoSection from './OpenCodeGoSection';
 import {
   barColor,
   compactNumber,
@@ -85,7 +86,7 @@ function AccountCard(props: { item: AccountWithUsage }) {
         {caps.length > 0 && (
           <div class="flex items-center gap-1 flex-wrap ml-auto">
             {caps.map((c) => (
-              <span key={c.label} class={`inline-flex items-center gap-1 text-[11px] font-medium px-1.5 py-0.5 rounded ${c.cls}`} title={c.tooltip}>
+              <span key={c.label} class={`inline-flex items-center gap-1 text-[11px] font-medium px-1.5 py-0.5 rounded shrink-0 whitespace-nowrap ${c.cls}`} title={c.tooltip}>
                 <span class="opacity-60">{c.label}</span>
                 <span class="tabular-nums">{c.value}</span>
               </span>
@@ -197,7 +198,10 @@ export default defineComponent({
             </div>
 
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
-              <PlatformSection platform="anthropic" list={anthropic} />
+              <div class="flex flex-col gap-6">
+                <PlatformSection platform="anthropic" list={anthropic} />
+                <OpenCodeGoSection />
+              </div>
               <PlatformSection platform="openai" list={openai} />
             </div>
           </div>

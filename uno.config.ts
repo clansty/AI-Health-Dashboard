@@ -11,6 +11,7 @@ export default defineConfig({
     'i-logos:qwen-icon',
     'i-logos:claude-icon',
     'i-bi:openai',
+    'i-simple-icons:opencode',
     'i-logos:deepseek-icon',
     'i-simple-icons:xiaomi',
     'i-vscode-icons:file-type-gemini',

@@ -1,8 +1,15 @@
+import { handleOpenCodeGoQuota } from './opencodeGo';
+
 interface Env {
   ASSETS: Fetcher;
   VPC: Fetcher;
   SUB2API_BASE_URL: string;
   SUB2API_API_KEY: string;
+  OPENCODE_GO_WORKSPACE_ID?: string;
+  OPENCODE_GO_WORKSPACE_IDS?: string;
+  OPENCODE_GO_WORKSPACES_JSON?: string;
+  OPENCODE_GO_AUTH_COOKIE?: string;
+  OPENCODE_GO_WINDOWS?: string;
 }
 
 const USAGE_ALLOWED_KEYS = new Set([
@@ -24,6 +31,10 @@ export default {
 
     if (url.pathname === '/api/sub2api/accounts' && request.method === 'GET') {
       return handleAccounts(env);
+    }
+
+    if (url.pathname === '/api/opencode/go/quota' && request.method === 'GET') {
+      return handleOpenCodeGoQuota(env);
     }
 
     const usageMatch = url.pathname.match(/^\/api\/sub2api\/accounts\/([^/]+)\/usage$/);

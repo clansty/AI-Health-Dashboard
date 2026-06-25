@@ -114,3 +114,26 @@ export interface AccountWithUsage {
   loading: boolean;
   error: string | null;
 }
+
+export type OpenCodeGoWindowKey = 'rolling' | 'weekly' | 'monthly';
+
+export interface OpenCodeGoWindowUsage {
+  readonly usagePercent: number;
+  readonly resetInSec: number;
+  readonly percentRemaining: number;
+  readonly resetTimeIso: string;
+}
+
+export interface OpenCodeGoWorkspaceQuota {
+  readonly label: string;
+  readonly ok: boolean;
+  readonly error: string | null;
+  readonly rolling: OpenCodeGoWindowUsage | null;
+  readonly weekly: OpenCodeGoWindowUsage | null;
+  readonly monthly: OpenCodeGoWindowUsage | null;
+}
+
+export interface OpenCodeGoQuotaResponse {
+  readonly items: readonly OpenCodeGoWorkspaceQuota[];
+  readonly error: string | null;
+}

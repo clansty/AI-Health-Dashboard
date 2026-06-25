@@ -4,6 +4,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "strict": true,
+    "lib": ["esnext"],
     "types": ["@cloudflare/workers-types"]
   },
   "include": ["./**/*.ts"]
