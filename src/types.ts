@@ -25,6 +25,7 @@ export interface Sub2ApiAccount {
   type: string;
   status: string;
   error_message: string;
+  last_used_at: string | null;
   schedulable: boolean;
   rate_limited_at: string | null;
   rate_limit_reset_at: string | null;

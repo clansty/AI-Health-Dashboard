@@ -62,6 +62,7 @@ async function handleAccounts(env: Env): Promise<Response> {
     type: a.type,
     status: a.status,
     error_message: a.error_message ?? '',
+    last_used_at: a.last_used_at ?? null,
     schedulable: a.schedulable ?? true,
     rate_limited_at: a.rate_limited_at ?? null,
     rate_limit_reset_at: a.rate_limit_reset_at ?? null,

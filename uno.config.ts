@@ -20,5 +20,8 @@ export default defineConfig({
     'i-bxl:grok',
     'i-mynaui:letter-z-solid',
     'i-simple-icons:ollama',
+    'i-ph:clock',
+    'i-ph:caret-down',
+    'i-ph:caret-right',
   ],
 });

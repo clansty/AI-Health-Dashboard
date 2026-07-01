@@ -22,6 +22,21 @@ export function windowReset(w: UsageWindow): string {
   return formatRemaining(Math.max(0, sec));
 }
 
+export function formatLastUsed(iso: string | null): string {
+  if (!iso) return '从未使用';
+  const t = new Date(iso).getTime();
+  if (Number.isNaN(t)) return '—';
+  const diffSec = (Date.now() - t) / 1000;
+  if (diffSec < 60) return '刚刚';
+  return `${formatRemaining(diffSec)}前`;
+}
+
+export function absoluteTime(iso: string | null): string | undefined {
+  if (!iso) return undefined;
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? undefined : d.toLocaleString();
+}
+
 function isFuture(iso: string | null): boolean {
   return remainingFromIso(iso) > 0;
 }

@@ -1,14 +1,16 @@
-import { defineComponent } from 'vue';
+import { defineComponent, ref, type PropType } from 'vue';
 import { useAccounts } from '@/composables/useAccounts';
 import type { AccountWithUsage, UsageWindow } from '@/types';
 import OpenCodeGoSection from './OpenCodeGoSection';
 import {
+  absoluteTime,
   barColor,
   compactNumber,
   computeCapacity,
   computeStats,
   computeStatus,
   computeUsageError,
+  formatLastUsed,
   pctLabel,
   pctTextColor,
   sortByStatus,
@@ -83,6 +85,10 @@ function AccountCard(props: { item: AccountWithUsage }) {
           <span>{status.label}</span>
           {status.detail && <span class="opacity-70 font-normal">· {status.detail}</span>}
         </span>
+        <span class="inline-flex items-center gap-1 text-[11px] text-zinc-500 shrink-0 whitespace-nowrap" title={absoluteTime(a.last_used_at)}>
+          <span class="i-ph:clock shrink-0" />
+          {formatLastUsed(a.last_used_at)}
+        </span>
         {caps.length > 0 && (
           <div class="flex items-center gap-1 flex-wrap ml-auto">
             {caps.map((c) => (
@@ -152,10 +158,34 @@ function PlatformSummaryCard(props: { platform: string; stats: PlatformStats }) 
   );
 }
 
+const CollapsibleErrors = defineComponent({
+  props: { list: { type: Array as PropType<AccountWithUsage[]>, required: true } },
+  setup(props) {
+    const open = ref(false);
+    return () => (
+      <div class="flex flex-col gap-2">
+        <button
+          type="button"
+          onClick={() => (open.value = !open.value)}
+          class="flex items-center gap-2 w-full text-left px-1 py-1 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
+        >
+          <span class={open.value ? 'i-ph:caret-down' : 'i-ph:caret-right'} />
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
+          <span class="font-medium">账号错误</span>
+          <span class="tabular-nums text-zinc-500">{props.list.length}</span>
+        </button>
+        {open.value && props.list.map((item) => <AccountCard key={item.account.id} item={item} />)}
+      </div>
+    );
+  },
+});
+
 function PlatformSection(props: { platform: string; list: AccountWithUsage[] }) {
   const meta = platformMeta[props.platform] ?? { label: props.platform, accent: 'from-zinc-400 to-zinc-500' };
   if (!props.list.length) return null;
-  const list = sortByStatus(props.list);
+  const sorted = sortByStatus(props.list);
+  const errors = sorted.filter((item) => computeStatus(item.account).kind === 'error');
+  const normal = sorted.filter((item) => computeStatus(item.account).kind !== 'error');
   return (
     <div>
       <div class="flex items-center gap-2 mb-2.5">
@@ -164,7 +194,8 @@ function PlatformSection(props: { platform: string; list: AccountWithUsage[] }) 
         <span class="text-xs text-zinc-500">{props.list.length} 个账号</span>
       </div>
       <div class="flex flex-col gap-2">
-        {list.map((item) => <AccountCard key={item.account.id} item={item} />)}
+        {normal.map((item) => <AccountCard key={item.account.id} item={item} />)}
+        {errors.length > 0 && <CollapsibleErrors list={errors} />}
       </div>
     </div>
   );
